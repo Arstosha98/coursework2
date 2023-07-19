@@ -1,5 +1,6 @@
 package com.example.coursework2.service.impl;
 
+import com.example.coursework2.exception.NotAllowedException;
 import com.example.coursework2.model.Question;
 import com.example.coursework2.repository.QuestionRepository;
 import com.example.coursework2.service.QuestionService;
@@ -14,40 +15,38 @@ import java.util.Random;
 public class MathQuestionService implements QuestionService {
 
     public static final Random RANDOM = new Random();
-    private final QuestionRepository questionRepository;
-
-    public MathQuestionService(@Qualifier("mathQuestionRepository") QuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
-    }
-
 
     @Override
     public Question add(String question, String answer) {
-        return add(new Question(question, answer));
+        throw new NotAllowedException();
     }
 
     @Override
     public Question add(Question question) {
-        return questionRepository.add(question);
+        throw new NotAllowedException();
     }
     @Override
     public Question remove(String question, String answer) {
-        return remove(new Question(question, answer));
+        throw new NotAllowedException();
     }
 
     @Override
     public Question remove(Question question){
-        return questionRepository.remove(question);
+        throw new NotAllowedException();
     }
 
     @Override
     public Collection<Question> getAll() {
-        return questionRepository.getAll();
+        throw new NotAllowedException();
     }
 
     @Override
     public Question getRandomQuestion() {
-        List<Question> questions = questionRepository.getAll();
-        return questions.get(RANDOM.nextInt(questions.size()));
+        int a = RANDOM.nextInt(100);
+        int b = RANDOM.nextInt(100);
+        return new Question(a + " + " + b, String.valueOf(a + b));
+//        new Question(a + " - " + b, String.valueOf(a - b));
+//        new Question(a + " / " + b, String.valueOf(a / b));
+//        new Question(a + " * " + b, String.valueOf(a * b));
     }
 }
