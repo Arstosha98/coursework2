@@ -7,7 +7,9 @@ import com.example.coursework2.service.QuestionService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,33 +18,22 @@ import java.util.stream.Stream;
 public class ExaminerServiceImpl implements ExaminerService {
 
     private static final Random RANDOM = new Random();
-    private final QuestionService javaQuestionService;
-    private final QuestionService mathQuestionService;
+    private final List<QuestionService> questionServices = new ArrayList<>();
 
     public ExaminerServiceImpl(@Qualifier("javaQuestionService") QuestionService javaQuestionService,
                                @Qualifier("mathQuestionService") QuestionService mathQuestionService) {
-        this.javaQuestionService = javaQuestionService;
-        this.mathQuestionService = mathQuestionService;
+        questionServices.add(javaQuestionService);
+        questionServices.add(mathQuestionService);
     }
 
     @Override
     public Collection<Question> getQuestion(int amount) {
-        if (amount > javaQuestionService.getAll().size() + mathQuestionService.getAll().size()){
-        throw new NotEnoughQuestionsException();
-        }
         return Stream.generate(() -> getRandomQuestionService().getRandomQuestion())
                 .distinct()
                 .limit(amount)
                 .collect(Collectors.toList());
     }
-private QuestionService getRandomQuestionService(){
-        switch (RANDOM.nextInt(2)){
-            case 0:
-                return javaQuestionService;
-            case 1:
-                return mathQuestionService;
-            default:
-                throw new RuntimeException();
-        }
+    private QuestionService getRandomQuestionService(){
+        return questionServices.get(RANDOM.nextInt(questionServices.size()));
     }
 }
