@@ -1,6 +1,7 @@
 package com.example.coursework2.service;
 
 import com.example.coursework2.model.Question;
+import com.example.coursework2.service.impl.ExaminerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,8 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +22,7 @@ public class ExaminerServiceTest {
     QuestionService questionService;
 
     @InjectMocks
-    ExaminerService examinerService;
+    ExaminerServiceImpl examinerService;
 
     List<Question> questions = Arrays.asList(
             new Question("Какие циклы вы знаете? ","for, while, do-while"),
@@ -34,9 +35,17 @@ public class ExaminerServiceTest {
     }
     @Test
     void getQuestion(){
-//        Question actual = ;
-//        Question expected = ;
+        int amount = 3;
+        when(questionService.getRandomQuestion())
+                .thenReturn(questions.get(0))
+                .thenReturn(questions.get(1))
+                .thenReturn(questions.get(2));
 
-//        Подскажите как выглядит тест к этому методу
+        Collection<Question> result = examinerService.getQuestion(amount);
+
+        assertEquals(amount, result.size());
+        assertTrue(result.contains(questions.get(0)));
+        assertTrue(result.contains(questions.get(1)));
+        assertTrue(result.contains(questions.get(2)));
     }
 }
