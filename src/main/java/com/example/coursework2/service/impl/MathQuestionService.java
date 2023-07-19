@@ -44,9 +44,13 @@ public class MathQuestionService implements QuestionService {
     public Question getRandomQuestion() {
         int a = RANDOM.nextInt(100);
         int b = RANDOM.nextInt(100);
-        return new Question(a + " + " + b, String.valueOf(a + b));
-//        new Question(a + " - " + b, String.valueOf(a - b));
-//        new Question(a + " / " + b, String.valueOf(a / b));
-//        new Question(a + " * " + b, String.valueOf(a * b));
+
+        return switch (RANDOM.nextInt(4)) {
+            case 0 -> new Question(a + " - " + b, String.valueOf(a - b));
+            case 1 -> new Question(a + " / " + b, String.valueOf(a / b));
+            case 2 -> new Question(a + " + " + b, String.valueOf(a + b));
+            case 3 -> new Question(a + " * " + b, String.valueOf(a * b));
+            default -> throw new RuntimeException();
+        };
     }
 }
