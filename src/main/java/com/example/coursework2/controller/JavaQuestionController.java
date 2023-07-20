@@ -23,7 +23,7 @@ public class JavaQuestionController {
     }
     @GetMapping("/remove")
     public Question remove(String question, String answer){
-        return questionService.add(question, answer);
+        return questionService.remove(question, answer);
     }
     @GetMapping
     public Collection<Question> getAll(){
