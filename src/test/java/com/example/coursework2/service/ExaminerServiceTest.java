@@ -26,7 +26,7 @@ public class ExaminerServiceTest {
 
     List<Question> questions = Arrays.asList(
             new Question("Какие циклы вы знаете? ","for, while, do-while"),
-            new Question("Какие целочисленные переменные вы знаете? ","byte, short, int, long"),
+            new Question("1+1 ","2"),
             new Question("Какие условные операторы вы знаете? ","if, else, switch, else if, if-if")
     );
     @BeforeEach

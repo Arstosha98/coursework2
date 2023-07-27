@@ -36,13 +36,10 @@ public class ExaminerServiceImpl implements ExaminerService {
                 .collect(Collectors.toList());
     }
 private QuestionService getRandomQuestionService(){
-        switch (RANDOM.nextInt(2)){
-            case 0:
-                return javaQuestionService;
-            case 1:
-                return mathQuestionService;
-            default:
-                throw new RuntimeException();
-        }
+    return switch (RANDOM.nextInt(2)) {
+        case 0 -> javaQuestionService;
+        case 1 -> mathQuestionService;
+        default -> throw new RuntimeException();
+    };
     }
 }

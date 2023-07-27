@@ -19,8 +19,6 @@ public class MathQuestionService implements QuestionService {
     public MathQuestionService(@Qualifier("mathQuestionRepository") QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
-
-
     @Override
     public Question add(String question, String answer) {
         return add(new Question(question, answer));
